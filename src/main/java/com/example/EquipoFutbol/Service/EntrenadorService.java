@@ -5,6 +5,7 @@ import com.example.EquipoFutbol.Repository.EntrenadorRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class EntrenadorService {
@@ -37,6 +38,17 @@ public class EntrenadorService {
             return entrenadorRepository.findAll();
         }catch (Exception e){
             throw new RuntimeException("Error al listar los entrenadores");
+        }
+    }
+
+    public Optional<Entrenador> listarEntrenadorPorId(int id) {
+        try{
+            if(!entrenadorRepository.existsById(id)){
+                throw new IllegalArgumentException("No se encontro el entrenador con ID: " + id);
+            }
+            return entrenadorRepository.findById(id);
+        }catch(Exception e){
+            throw new RuntimeException("Error al buscar el entrnador por ID: " + id + e.getMessage(), e);
         }
     }
 
